@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <title>Тук-тук, кто тут?</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -428,7 +431,6 @@
     </div>
 
     <div class="container" id="app">
-        <!-- ВЫБОР ТЕМЫ -->
         <div id="pageTheme" class="page active">
             <div class="card">
                 <h2>Выбери своё настроение</h2>
@@ -453,7 +455,6 @@
             </div>
         </div>
 
-        <!-- АНКЕТА -->
         <div id="pageProfile" class="page">
             <div class="card">
                 <h2 style="margin-bottom: 4px;">Заполни анкету</h2>
@@ -501,7 +502,6 @@
             </div>
         </div>
 
-        <!-- КАНДИДАТЫ -->
         <div id="pageCandidates" class="page">
             <div class="card" id="candidateContainer">
                 <div id="candidateInner"><p class="text-center" style="opacity:0.5;">Загрузка...</p></div>
@@ -512,7 +512,6 @@
             </div>
         </div>
 
-        <!-- ЧАТЫ -->
         <div id="pageChats" class="page">
             <div class="card">
                 <h2 style="margin-bottom: 12px;">Мои чаты</h2>
@@ -520,7 +519,6 @@
             </div>
         </div>
 
-        <!-- ОДИН ЧАТ -->
         <div id="pageChat" class="page">
             <div class="card">
                 <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
@@ -703,7 +701,6 @@
             }
         }
 
-        // === ИСПРАВЛЕННАЯ ЗАГРУЗКА ФОТО С ПРИНУДИТЕЛЬНЫМ ОБНОВЛЕНИЕМ ===
         async function handleFileUpload(e) {
             const files = e.target.files;
             if (!files.length) return;
@@ -729,7 +726,7 @@
                     if (result.success) {
                         state.uploadedPhotos.push(result.url);
                         console.log('Фото загружено, URL:', result.url);
-                        renderPhotoPreviews(); // принудительно обновляем
+                        renderPhotoPreviews();
                     } else {
                         alert('Ошибка загрузки фото: ' + (result.error || 'неизвестная ошибка'));
                     }
