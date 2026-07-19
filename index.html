@@ -265,9 +265,15 @@
             if (window.Telegram && window.Telegram.WebApp) {
                 initData = window.Telegram.WebApp.initData || '';
             }
+            // Всегда добавляем user_id в тело запроса для надёжности
             if (!initData) {
                 data.user_id = getFallbackUserId();
                 console.log('Using fallback user_id in API call:', data.user_id);
+            } else {
+                // Если initData есть, пробуем извлечь user_id из него (но мы всё равно добавим fallback на всякий случай)
+                // Но лучше использовать fallback для теста
+                data.user_id = getFallbackUserId();
+                console.log('Using fallback user_id in API call (with initData):', data.user_id);
             }
             const resp = await fetch(`${API_BASE}/api`, {
                 method: 'POST',
@@ -290,7 +296,6 @@
                 state.access = res.access;
                 state.premium = res.premium;
                 state.trialRemaining = res.remaining || 0;
-                // Если доступ есть или премиум - скрываем замочек
                 if (state.access || state.premium) {
                     document.getElementById('lockOverlay').classList.remove('show');
                 } else {
@@ -362,18 +367,19 @@
         async function handleFileUpload(e) {
             const files = e.target.files;
             if (!files.length) return;
+            const fallbackUserId = getFallbackUserId(); // получаем один раз
             for (const file of files) {
                 const formData = new FormData();
                 formData.append('file', file);
+                // Всегда добавляем user_id в FormData, чтобы сервер точно его получил
+                formData.append('user_id', fallbackUserId);
+                console.log('Upload: sending user_id:', fallbackUserId);
+
                 let initData = '';
                 if (window.Telegram && window.Telegram.WebApp) {
                     initData = window.Telegram.WebApp.initData || '';
                 }
-                if (!initData) {
-                    const fallbackUserId = getFallbackUserId();
-                    formData.append('user_id', fallbackUserId);
-                    console.log('Upload: using fallback user_id:', fallbackUserId);
-                }
+
                 try {
                     const resp = await fetch(`${API_BASE}/upload_photo`, {
                         method: 'POST',
