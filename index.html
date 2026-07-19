@@ -15,7 +15,6 @@
             color: #333;
         }
         /* ===== ТЕМЫ ===== */
-        /* Романтическая (по умолчанию) */
         body.romantic {
             background: #fce4ec;
             color: #4a2c3a;
@@ -68,8 +67,6 @@
             color: #fff;
             border-color: #e91e63;
         }
-
-        /* Игровая */
         body.game {
             background: #0d0d1a;
             color: #e0e0ff;
@@ -123,7 +120,6 @@
             color: #fff;
             border-color: #7c4dff;
         }
-
         /* ===== ОБЩИЕ КОМПОНЕНТЫ ===== */
         .container {
             max-width: 480px;
@@ -137,7 +133,6 @@
         .page { display: none; }
         .page.active { display: block; animation: fade 0.3s ease; }
         @keyframes fade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
         .btn-primary {
             width: 100%;
             cursor: pointer;
@@ -152,7 +147,6 @@
             width: 100%;
             transition: 0.2s;
         }
-
         .lock-overlay {
             display: none;
             position: fixed;
@@ -173,9 +167,7 @@
         }
         .lock-overlay h2 { color: #fff; margin-bottom: 12px; }
         .lock-overlay p { color: #ddd; max-width: 300px; margin-bottom: 24px; }
-
         /* ===== СПЕЦИФИЧНЫЕ СТРАНИЦЫ ===== */
-        /* Выбор темы */
         .theme-selector {
             display: flex;
             flex-direction: column;
@@ -207,22 +199,11 @@
         .theme-card .info { flex: 1; }
         .theme-card .info h3 { font-size: 18px; margin-bottom: 4px; }
         .theme-card .info p { font-size: 14px; opacity: 0.7; }
-
-        /* Анкета */
         .photo-upload {
             display: flex;
             gap: 12px;
             overflow-x: auto;
             padding: 8px 0;
-        }
-        .photo-upload .photo-preview {
-            width: 80px; height: 80px;
-            border-radius: 16px;
-            background: rgba(0,0,0,0.05);
-            flex-shrink: 0;
-            background-size: cover;
-            background-position: center;
-            position: relative;
         }
         .photo-upload .add-btn {
             width: 80px; height: 80px;
@@ -236,7 +217,28 @@
             flex-shrink: 0;
         }
         body.game .photo-upload .add-btn { border-color: rgba(180,100,255,0.3); }
-
+        .photo-preview {
+            width: 60px; height: 60px;
+            border-radius: 12px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            flex-shrink: 0;
+        }
+        .photo-preview .remove {
+            position: absolute;
+            top: -6px; right: -6px;
+            background: red;
+            color: #fff;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            cursor: pointer;
+        }
         .category-group {
             display: flex;
             flex-wrap: wrap;
@@ -244,8 +246,6 @@
             margin-top: 10px;
         }
         .category-group .chip { cursor: pointer; }
-
-        /* Кандидаты */
         .candidate-card {
             position: relative;
             min-height: 360px;
@@ -294,8 +294,6 @@
         .candidate-actions button:active { transform: scale(0.88); }
         .candidate-actions .dislike { background: #ff5252; color: #fff; }
         .candidate-actions .like { background: #69f0ae; color: #1b5e20; }
-
-        /* Чаты */
         .chat-list-item {
             display: flex;
             align-items: center;
@@ -316,7 +314,6 @@
         .chat-list-item .details { flex: 1; }
         .chat-list-item .details .name { font-weight: 600; }
         .chat-list-item .details .last-msg { font-size: 14px; opacity: 0.6; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 180px; }
-
         .chat-messages {
             max-height: 400px;
             overflow-y: auto;
@@ -365,8 +362,6 @@
             font-weight: 600;
             cursor: pointer;
         }
-
-        /* Адаптив */
         @media (max-width: 480px) {
             .container { padding: 16px 12px; }
             .candidate-card { min-height: 300px; }
@@ -446,9 +441,7 @@
                 </div>
                 <div style="margin-top: 12px;">
                     <label style="font-weight:600; font-size:14px;">Категории (выбери несколько)</label>
-                    <div class="category-group" id="purposeChips">
-                        <!-- Заполняется из JS -->
-                    </div>
+                    <div class="category-group" id="purposeChips"></div>
                 </div>
                 <div style="margin-top: 12px;">
                     <label style="font-weight:600; font-size:14px;">О себе</label>
@@ -507,10 +500,8 @@
 
     <script>
         // ===== КОНСТАНТЫ =====
-        // Для локального теста используй ngrok-адрес. Если тестируешь с телефона, подставь внешний.
+        // !!! ЗАМЕНИ ЭТУ СТРОКУ НА СВОЙ АКТУАЛЬНЫЙ АДРЕС БЕКЕНДА (ngrok или свой домен) !!!
         const API_BASE = 'https://garage-courier-everybody.ngrok-free.dev';
-        // Если запускаешь локально на компьютере, закомментируй строку выше и раскомментируй:
-        // const API_BASE = 'http://localhost:8081';
 
         const ALL_PURPOSES = [
             'Дружба', 'Общение', 'Флирт', 'Романтика',
@@ -520,7 +511,6 @@
 
         // ===== СОСТОЯНИЕ =====
         let state = {
-            user_id: null,
             theme: localStorage.getItem('tuktuk_theme') || null,
             profile: null,
             candidates: [],
@@ -536,46 +526,30 @@
 
         // ===== ИНИЦИАЛИЗАЦИЯ =====
         async function init() {
-            // Получаем user_id из Telegram WebApp (если запущено внутри ТГ) или генерируем тестовый
             if (window.Telegram && window.Telegram.WebApp) {
-                const initData = window.Telegram.WebApp.initData;
-                // Здесь нужно декодировать initData, но для упрощения мы отправим его в заголовках.
-                // Пока используем заглушку: берём user_id из initData (если есть) или оставляем null.
-                // В реальности надо парсить initData на сервере.
-                // Для теста мы разрешим ввести ID вручную (но потом надо заменить на реальный).
+                window.Telegram.WebApp.ready();
+            } else {
+                alert('Это приложение работает только внутри Telegram.');
+                return;
             }
-            // Временно: запросим user_id через простой диалог (для локального теста)
-            let uid = localStorage.getItem('tuktuk_user_id');
-            if (!uid) {
-                uid = prompt('Введите ваш user_id (для теста можно любой, но потом нужно будет получать реальный)');
-                if (uid) localStorage.setItem('tuktuk_user_id', uid);
-            }
-            state.user_id = parseInt(uid, 10);
 
-            // Проверяем доступ
             await checkAccess();
 
-            // Если тема не выбрана — показываем выбор
             if (!state.theme) {
                 showPage('pageTheme');
             } else {
                 applyThemeToBody(state.theme);
-                // Пытаемся загрузить профиль
                 await loadProfile();
-                // ВСЕГДА рендерим категории (даже если профиля нет)
                 renderPurposeChips();
                 if (state.profile) {
-                    // Если профиль есть, идём на кандидатов
                     await loadCandidates();
                     showPage('pageCandidates');
                 } else {
                     showPage('pageProfile');
                 }
-                // Загружаем чаты в фоне
                 loadChats();
             }
 
-            // Настройка загрузки фото
             document.getElementById('fileInput').addEventListener('change', handleFileUpload);
         }
 
@@ -590,18 +564,15 @@
             if (!state.theme) return;
             localStorage.setItem('tuktuk_theme', state.theme);
             applyThemeToBody(state.theme);
-            // После выбора темы переходим к анкете
             loadProfile();
-            renderPurposeChips(); // <-- гарантируем рендер чипсов
+            renderPurposeChips();
             showPage('pageProfile');
         }
 
         function applyThemeToBody(theme) {
             document.body.className = theme;
-            // Дополнительно меняем мета-цвет для статус-бара (опционально)
         }
 
-        // ===== НАВИГАЦИЯ =====
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
@@ -609,7 +580,6 @@
 
         // ===== ЗАПРОСЫ К API =====
         async function apiCall(action, data = {}) {
-            // Для реального использования надо добавить initData в заголовки.
             const initData = window.Telegram?.WebApp?.initData || '';
             const resp = await fetch(`${API_BASE}/api`, {
                 method: 'POST',
@@ -617,7 +587,7 @@
                     'Content-Type': 'application/json',
                     'X-Telegram-WebApp-InitData': initData,
                 },
-                body: JSON.stringify({ action, ...data, user_id: state.user_id }),
+                body: JSON.stringify({ action, ...data }),
             });
             if (!resp.ok) {
                 const err = await resp.json();
@@ -643,25 +613,21 @@
             }
         }
 
-        // ===== ПОКУПКА ДОСТУПА =====
         function buyAccess() {
-            // Отправляем команду боту через WebApp
             if (window.Telegram && window.Telegram.WebApp) {
                 window.Telegram.WebApp.sendData('buy_dating');
-                // После оплаты бот пришлёт уведомление, а мини-апп может периодически проверять доступ
                 alert('Инвойс отправлен в чат. Оплатите в Telegram.');
             } else {
                 alert('Функция оплаты доступна только внутри Telegram');
             }
         }
 
-        // ===== ЗАГРУЗКА ПРОФИЛЯ =====
+        // ===== ПРОФИЛЬ =====
         async function loadProfile() {
             try {
                 const res = await apiCall('get_profile');
                 if (res.profile) {
                     state.profile = res.profile;
-                    // Заполняем форму анкеты
                     document.getElementById('profileCity').value = state.profile.city || '';
                     document.getElementById('profileAge').value = state.profile.age || '';
                     document.getElementById('profileGender').value = state.profile.gender || 'male';
@@ -671,14 +637,13 @@
                     state.uploadedPhotos = state.profile.photos || [];
                     renderPhotoPreviews();
                     state.selectedPurposes = state.profile.purposes || [];
-                    renderPurposeChips(); // обновляем чипсы из профиля
+                    renderPurposeChips();
                 }
             } catch (e) {
                 console.error('loadProfile error', e);
             }
         }
 
-        // ===== СОХРАНЕНИЕ ПРОФИЛЯ =====
         async function saveProfile() {
             const city = document.getElementById('profileCity').value.trim();
             const age = parseInt(document.getElementById('profileAge').value, 10);
@@ -711,7 +676,7 @@
                 await apiCall('create_profile', payload);
                 alert('Профиль сохранён!');
                 await loadProfile();
-                renderPurposeChips(); // <-- обновляем чипсы после сохранения
+                renderPurposeChips();
                 await loadCandidates();
                 showPage('pageCandidates');
             } catch (e) {
@@ -727,17 +692,22 @@
                 const formData = new FormData();
                 formData.append('file', file);
                 const initData = window.Telegram?.WebApp?.initData || '';
-                const resp = await fetch(`${API_BASE}/upload_photo`, {
-                    method: 'POST',
-                    headers: { 'X-Telegram-WebApp-InitData': initData },
-                    body: formData,
-                });
-                const result = await resp.json();
-                if (result.success) {
-                    state.uploadedPhotos.push(result.url);
-                    renderPhotoPreviews();
-                } else {
-                    alert('Ошибка загрузки фото');
+                try {
+                    const resp = await fetch(`${API_BASE}/upload_photo`, {
+                        method: 'POST',
+                        headers: { 'X-Telegram-WebApp-InitData': initData },
+                        body: formData,
+                    });
+                    const result = await resp.json();
+                    if (result.success) {
+                        state.uploadedPhotos.push(result.url);
+                        renderPhotoPreviews();
+                    } else {
+                        alert('Ошибка загрузки фото: ' + (result.error || 'неизвестная ошибка'));
+                    }
+                } catch (err) {
+                    alert('Ошибка сети при загрузке фото');
+                    console.error(err);
                 }
             }
             document.getElementById('fileInput').value = '';
@@ -745,11 +715,15 @@
 
         function renderPhotoPreviews() {
             const container = document.getElementById('photoPreviewContainer');
-            container.innerHTML = state.uploadedPhotos.map(url =>
-                `<div style="width:60px; height:60px; border-radius:12px; background-image:url(${url}); background-size:cover; background-position:center; position:relative;">
-                    <span style="position:absolute; top:-6px; right:-6px; background:red; color:#fff; border-radius:50%; width:20px; height:20px; display:flex; align-items:center; justify-content:center; font-size:12px; cursor:pointer;" onclick="removePhoto('${url}')">×</span>
-                </div>`
-            ).join('');
+            if (state.uploadedPhotos.length === 0) {
+                container.innerHTML = '';
+                return;
+            }
+            container.innerHTML = state.uploadedPhotos.map(url => `
+                <div class="photo-preview" style="background-image: url(${url});">
+                    <span class="remove" onclick="removePhoto('${url}')">×</span>
+                </div>
+            `).join('');
         }
 
         function removePhoto(url) {
@@ -826,7 +800,6 @@
                 }
                 state.currentCandidateIndex++;
                 if (state.currentCandidateIndex >= state.candidates.length) {
-                    // Загружаем новую партию
                     await loadCandidates();
                 } else {
                     renderCandidate();
@@ -874,7 +847,6 @@
             document.getElementById('chatPartnerName').textContent = partnerName;
             showPage('pageChat');
             await loadMessages();
-            // Периодический опрос новых сообщений
             if (window.chatInterval) clearInterval(window.chatInterval);
             window.chatInterval = setInterval(loadMessages, 3000);
         }
@@ -886,7 +858,7 @@
                 const messages = res.messages || [];
                 const container = document.getElementById('chatMessages');
                 container.innerHTML = messages.map(msg =>
-                    `<div class="msg ${msg.sender_id === state.user_id ? 'mine' : 'theirs'}">${msg.message}</div>`
+                    `<div class="msg ${msg.sender_id === window.Telegram?.WebApp?.initData ? 'mine' : 'theirs'}">${msg.message}</div>`
                 ).join('');
                 container.scrollTop = container.scrollHeight;
             } catch (e) {
@@ -910,12 +882,11 @@
         // ===== ЗАПУСК =====
         document.addEventListener('DOMContentLoaded', init);
 
-        // Вспомогательная функция для теста: сбросить тему
+        // Вспомогательные функции для сброса (для теста)
         window.resetTheme = () => {
             localStorage.removeItem('tuktuk_theme');
             location.reload();
         };
-        // Для теста: показать профиль
         window.showProfile = () => showPage('pageProfile');
         window.showCandidates = () => showPage('pageCandidates');
         window.showChats = () => showPage('pageChats');
