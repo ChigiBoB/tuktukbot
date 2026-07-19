@@ -594,7 +594,6 @@
                 initData = window.Telegram.WebApp.initData || '';
             }
 
-            // Если initData нет, добавляем fallback user_id в тело запроса
             if (!initData) {
                 data.user_id = getFallbackUserId();
                 console.log('Using fallback user_id in API call:', data.user_id);
@@ -632,12 +631,15 @@
             }
         }
 
+        // ===== ПОКУПКА ДОСТУПА (отправка команды боту) =====
         function buyAccess() {
             if (window.Telegram && window.Telegram.WebApp) {
+                // Отправляем команду боту через WebApp
                 window.Telegram.WebApp.sendData('buy_dating');
-                alert('Инвойс отправлен в чат. Оплатите в Telegram.');
+                // Бот пришлёт инвойс в чат
             } else {
-                alert('Функция оплаты доступна только внутри Telegram');
+                // Если не внутри Telegram — напоминаем, что надо открыть через бота
+                alert('Открой это приложение через бота, чтобы оплатить.');
             }
         }
 
@@ -715,7 +717,6 @@
                 if (window.Telegram && window.Telegram.WebApp) {
                     initData = window.Telegram.WebApp.initData || '';
                 }
-                // Если initData нет, добавляем user_id в FormData
                 if (!initData) {
                     const fallbackUserId = getFallbackUserId();
                     formData.append('user_id', fallbackUserId);
