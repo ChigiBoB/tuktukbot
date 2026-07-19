@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Тук-тук, кто тут?</title>
     <style>
-        /* все стили те же, что были */
+        /* ===== БАЗА ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, system-ui, sans-serif; transition: background 0.3s, color 0.3s; min-height: 100vh; background: #f5f5f5; color: #333; }
         body.romantic { background: #fce4ec; color: #4a2c3a; }
@@ -43,7 +43,7 @@
         .theme-card .info { flex: 1; }
         .theme-card .info h3 { font-size: 18px; margin-bottom: 4px; }
         .theme-card .info p { font-size: 14px; opacity: 0.7; }
-        .photo-upload { display: flex; gap: 12px; overflow-x: auto; padding: 8px 0; }
+        .photo-upload { display: flex; gap: 12px; overflow-x: auto; padding: 8px 0; flex-wrap: wrap; }
         .photo-upload .add-btn { width: 80px; height: 80px; border-radius: 16px; border: 2px dashed rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; font-size: 32px; cursor: pointer; flex-shrink: 0; }
         body.game .photo-upload .add-btn { border-color: rgba(180,100,255,0.3); }
         .photo-preview { width: 60px; height: 60px; border-radius: 12px; background-size: cover; background-position: center; position: relative; flex-shrink: 0; }
@@ -79,6 +79,7 @@
         .mt-12 { margin-top: 12px; }
         .mt-20 { margin-top: 20px; }
         .gap-8 { gap: 8px; }
+        #photoPreviewContainer { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
     </style>
 </head>
 <body>
@@ -118,7 +119,7 @@
                         <div class="add-btn" onclick="document.getElementById('fileInput').click()">+</div>
                         <input type="file" id="fileInput" accept="image/*" style="display:none" multiple>
                     </div>
-                    <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:6px;" id="photoPreviewContainer"></div>
+                    <div id="photoPreviewContainer"></div>
                 </div>
                 <div style="margin-top: 14px;">
                     <label style="font-weight:600; font-size:14px;">Город</label>
@@ -265,16 +266,9 @@
             if (window.Telegram && window.Telegram.WebApp) {
                 initData = window.Telegram.WebApp.initData || '';
             }
-            // Всегда добавляем user_id в тело запроса для надёжности
-            if (!initData) {
-                data.user_id = getFallbackUserId();
-                console.log('Using fallback user_id in API call:', data.user_id);
-            } else {
-                // Если initData есть, пробуем извлечь user_id из него (но мы всё равно добавим fallback на всякий случай)
-                // Но лучше использовать fallback для теста
-                data.user_id = getFallbackUserId();
-                console.log('Using fallback user_id in API call (with initData):', data.user_id);
-            }
+            // Всегда добавляем user_id для надёжности
+            data.user_id = getFallbackUserId();
+            console.log('API call with user_id:', data.user_id);
             const resp = await fetch(`${API_BASE}/api`, {
                 method: 'POST',
                 headers: {
@@ -303,7 +297,6 @@
                 }
             } catch (e) {
                 console.error('checkAccess error', e);
-                // В случае ошибки тоже скрываем, чтобы не мешать тесту
                 document.getElementById('lockOverlay').classList.remove('show');
             }
         }
@@ -361,19 +354,19 @@
                 renderPurposeChips();
                 await loadCandidates();
                 showPage('pageCandidates');
-            } catch (e) { alert('Ошибка: ' + e.message); }
+            } catch (e) {
+                alert('Ошибка сохранения профиля: ' + e.message);
+            }
         }
 
         async function handleFileUpload(e) {
             const files = e.target.files;
             if (!files.length) return;
-            const fallbackUserId = getFallbackUserId(); // получаем один раз
+            const fallbackUserId = getFallbackUserId();
             for (const file of files) {
                 const formData = new FormData();
                 formData.append('file', file);
-                // Всегда добавляем user_id в FormData, чтобы сервер точно его получил
                 formData.append('user_id', fallbackUserId);
-                console.log('Upload: sending user_id:', fallbackUserId);
 
                 let initData = '';
                 if (window.Telegram && window.Telegram.WebApp) {
@@ -393,7 +386,7 @@
                         state.uploadedPhotos.push(result.url);
                         renderPhotoPreviews();
                     } else {
-                        alert('Ошибка загрузки фото: ' + (result.error || 'неизвестная ошибка') + '\nДетали: ' + (result.details || ''));
+                        alert('Ошибка загрузки фото: ' + (result.error || 'неизвестная ошибка'));
                     }
                 } catch (err) {
                     alert('Ошибка сети при загрузке фото');
@@ -405,9 +398,12 @@
 
         function renderPhotoPreviews() {
             const container = document.getElementById('photoPreviewContainer');
-            if (state.uploadedPhotos.length === 0) { container.innerHTML = ''; return; }
+            if (state.uploadedPhotos.length === 0) {
+                container.innerHTML = '';
+                return;
+            }
             container.innerHTML = state.uploadedPhotos.map(url => `
-                <div class="photo-preview" style="background-image: url(${url});">
+                <div class="photo-preview" style="background-image: url(${url}); background-size: cover; background-position: center;">
                     <span class="remove" onclick="removePhoto('${url}')">×</span>
                 </div>
             `).join('');
