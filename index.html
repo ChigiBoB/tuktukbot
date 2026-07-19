@@ -5,367 +5,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Тук-тук, кто тут?</title>
     <style>
-        /* ===== БАЗА ===== */
+        /* все стили те же, что были */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: -apple-system, system-ui, sans-serif;
-            transition: background 0.3s, color 0.3s;
-            min-height: 100vh;
-            background: #f5f5f5;
-            color: #333;
-        }
-        /* ===== ТЕМЫ ===== */
-        body.romantic {
-            background: #fce4ec;
-            color: #4a2c3a;
-        }
-        body.romantic .card {
-            background: rgba(255,255,255,0.8);
-            backdrop-filter: blur(10px);
-            border-radius: 24px;
-            box-shadow: 0 8px 32px rgba(233, 30, 99, 0.15);
-            border: 1px solid rgba(255,255,255,0.3);
-        }
-        body.romantic .btn-primary {
-            background: #e91e63;
-            color: #fff;
-            border: none;
-            border-radius: 40px;
-            padding: 16px 32px;
-            font-size: 18px;
-            font-weight: 600;
-            transition: 0.2s;
-            box-shadow: 0 4px 16px rgba(233, 30, 99, 0.3);
-        }
+        body { font-family: -apple-system, system-ui, sans-serif; transition: background 0.3s, color 0.3s; min-height: 100vh; background: #f5f5f5; color: #333; }
+        body.romantic { background: #fce4ec; color: #4a2c3a; }
+        body.romantic .card { background: rgba(255,255,255,0.8); backdrop-filter: blur(10px); border-radius: 24px; box-shadow: 0 8px 32px rgba(233,30,99,0.15); border: 1px solid rgba(255,255,255,0.3); }
+        body.romantic .btn-primary { background: #e91e63; color: #fff; border: none; border-radius: 40px; padding: 16px 32px; font-size: 18px; font-weight: 600; transition: 0.2s; box-shadow: 0 4px 16px rgba(233,30,99,0.3); }
         body.romantic .btn-primary:active { transform: scale(0.96); }
-        body.romantic .input-field {
-            background: rgba(255,255,255,0.6);
-            border: 1px solid rgba(233,30,99,0.2);
-            border-radius: 16px;
-            padding: 14px 18px;
-            font-size: 16px;
-            width: 100%;
-            outline: none;
-            transition: 0.2s;
-        }
-        body.romantic .input-field:focus {
-            border-color: #e91e63;
-            box-shadow: 0 0 0 3px rgba(233,30,99,0.15);
-        }
-        body.romantic .chip {
-            background: rgba(233,30,99,0.08);
-            border: 1px solid rgba(233,30,99,0.15);
-            border-radius: 40px;
-            padding: 8px 16px;
-            display: inline-block;
-            margin: 4px;
-            transition: 0.2s;
-            color: #4a2c3a;
-        }
-        body.romantic .chip.selected {
-            background: #e91e63;
-            color: #fff;
-            border-color: #e91e63;
-        }
-        body.game {
-            background: #0d0d1a;
-            color: #e0e0ff;
-        }
-        body.game .card {
-            background: rgba(20, 20, 40, 0.85);
-            backdrop-filter: blur(12px);
-            border-radius: 24px;
-            box-shadow: 0 0 40px rgba(100, 0, 255, 0.2);
-            border: 1px solid rgba(180, 100, 255, 0.2);
-        }
-        body.game .btn-primary {
-            background: linear-gradient(135deg, #7c4dff, #b388ff);
-            color: #fff;
-            border: none;
-            border-radius: 40px;
-            padding: 16px 32px;
-            font-size: 18px;
-            font-weight: 600;
-            transition: 0.2s;
-            box-shadow: 0 0 30px rgba(124, 77, 255, 0.3);
-        }
+        body.romantic .input-field { background: rgba(255,255,255,0.6); border: 1px solid rgba(233,30,99,0.2); border-radius: 16px; padding: 14px 18px; font-size: 16px; width: 100%; outline: none; transition: 0.2s; }
+        body.romantic .input-field:focus { border-color: #e91e63; box-shadow: 0 0 0 3px rgba(233,30,99,0.15); }
+        body.romantic .chip { background: rgba(233,30,99,0.08); border: 1px solid rgba(233,30,99,0.15); border-radius: 40px; padding: 8px 16px; display: inline-block; margin: 4px; transition: 0.2s; color: #4a2c3a; }
+        body.romantic .chip.selected { background: #e91e63; color: #fff; border-color: #e91e63; }
+        body.game { background: #0d0d1a; color: #e0e0ff; }
+        body.game .card { background: rgba(20,20,40,0.85); backdrop-filter: blur(12px); border-radius: 24px; box-shadow: 0 0 40px rgba(100,0,255,0.2); border: 1px solid rgba(180,100,255,0.2); }
+        body.game .btn-primary { background: linear-gradient(135deg, #7c4dff, #b388ff); color: #fff; border: none; border-radius: 40px; padding: 16px 32px; font-size: 18px; font-weight: 600; transition: 0.2s; box-shadow: 0 0 30px rgba(124,77,255,0.3); }
         body.game .btn-primary:active { transform: scale(0.96); }
-        body.game .input-field {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(180,100,255,0.2);
-            border-radius: 16px;
-            padding: 14px 18px;
-            font-size: 16px;
-            width: 100%;
-            outline: none;
-            color: #e0e0ff;
-            transition: 0.2s;
-        }
-        body.game .input-field:focus {
-            border-color: #7c4dff;
-            box-shadow: 0 0 0 3px rgba(124,77,255,0.3);
-        }
-        body.game .chip {
-            background: rgba(124,77,255,0.12);
-            border: 1px solid rgba(124,77,255,0.2);
-            border-radius: 40px;
-            padding: 8px 16px;
-            display: inline-block;
-            margin: 4px;
-            transition: 0.2s;
-            color: #c0b0ff;
-        }
-        body.game .chip.selected {
-            background: #7c4dff;
-            color: #fff;
-            border-color: #7c4dff;
-        }
-        /* ===== ОБЩИЕ КОМПОНЕНТЫ ===== */
-        .container {
-            max-width: 480px;
-            margin: 0 auto;
-            padding: 20px 16px 100px;
-        }
-        .card {
-            padding: 24px 20px;
-            margin-bottom: 20px;
-        }
+        body.game .input-field { background: rgba(255,255,255,0.05); border: 1px solid rgba(180,100,255,0.2); border-radius: 16px; padding: 14px 18px; font-size: 16px; width: 100%; outline: none; color: #e0e0ff; transition: 0.2s; }
+        body.game .input-field:focus { border-color: #7c4dff; box-shadow: 0 0 0 3px rgba(124,77,255,0.3); }
+        body.game .chip { background: rgba(124,77,255,0.12); border: 1px solid rgba(124,77,255,0.2); border-radius: 40px; padding: 8px 16px; display: inline-block; margin: 4px; transition: 0.2s; color: #c0b0ff; }
+        body.game .chip.selected { background: #7c4dff; color: #fff; border-color: #7c4dff; }
+        .container { max-width: 480px; margin: 0 auto; padding: 20px 16px 100px; }
+        .card { padding: 24px 20px; margin-bottom: 20px; }
         .page { display: none; }
         .page.active { display: block; animation: fade 0.3s ease; }
         @keyframes fade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .btn-primary {
-            width: 100%;
-            cursor: pointer;
-        }
-        .btn-secondary {
-            background: transparent;
-            border: 2px solid currentColor;
-            border-radius: 40px;
-            padding: 14px 28px;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            transition: 0.2s;
-        }
-        .lock-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(8px);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            flex-direction: column;
-            padding: 40px;
-            text-align: center;
-        }
+        .btn-primary { width: 100%; cursor: pointer; }
+        .btn-secondary { background: transparent; border: 2px solid currentColor; border-radius: 40px; padding: 14px 28px; font-weight: 600; cursor: pointer; width: 100%; transition: 0.2s; }
+        .lock-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(8px); justify-content: center; align-items: center; z-index: 1000; flex-direction: column; padding: 40px; text-align: center; }
         .lock-overlay.show { display: flex; }
-        .lock-overlay .lock-icon {
-            font-size: 64px;
-            margin-bottom: 20px;
-        }
+        .lock-overlay .lock-icon { font-size: 64px; margin-bottom: 20px; }
         .lock-overlay h2 { color: #fff; margin-bottom: 12px; }
         .lock-overlay p { color: #ddd; max-width: 300px; margin-bottom: 24px; }
-        /* ===== СПЕЦИФИЧНЫЕ СТРАНИЦЫ ===== */
-        .theme-selector {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-        .theme-card {
-            display: flex;
-            align-items: center;
-            padding: 16px 20px;
-            border-radius: 20px;
-            border: 2px solid transparent;
-            transition: 0.2s;
-            cursor: pointer;
-            background: rgba(255,255,255,0.05);
-        }
-        .theme-card.selected {
-            border-color: currentColor;
-            background: rgba(255,255,255,0.12);
-        }
-        .theme-card .preview {
-            width: 60px; height: 60px;
-            border-radius: 16px;
-            margin-right: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-        }
+        .theme-selector { display: flex; flex-direction: column; gap: 16px; }
+        .theme-card { display: flex; align-items: center; padding: 16px 20px; border-radius: 20px; border: 2px solid transparent; transition: 0.2s; cursor: pointer; background: rgba(255,255,255,0.05); }
+        .theme-card.selected { border-color: currentColor; background: rgba(255,255,255,0.12); }
+        .theme-card .preview { width: 60px; height: 60px; border-radius: 16px; margin-right: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px; }
         .theme-card .info { flex: 1; }
         .theme-card .info h3 { font-size: 18px; margin-bottom: 4px; }
         .theme-card .info p { font-size: 14px; opacity: 0.7; }
-        .photo-upload {
-            display: flex;
-            gap: 12px;
-            overflow-x: auto;
-            padding: 8px 0;
-        }
-        .photo-upload .add-btn {
-            width: 80px; height: 80px;
-            border-radius: 16px;
-            border: 2px dashed rgba(0,0,0,0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
-            cursor: pointer;
-            flex-shrink: 0;
-        }
+        .photo-upload { display: flex; gap: 12px; overflow-x: auto; padding: 8px 0; }
+        .photo-upload .add-btn { width: 80px; height: 80px; border-radius: 16px; border: 2px dashed rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; font-size: 32px; cursor: pointer; flex-shrink: 0; }
         body.game .photo-upload .add-btn { border-color: rgba(180,100,255,0.3); }
-        .photo-preview {
-            width: 60px; height: 60px;
-            border-radius: 12px;
-            background-size: cover;
-            background-position: center;
-            position: relative;
-            flex-shrink: 0;
-        }
-        .photo-preview .remove {
-            position: absolute;
-            top: -6px; right: -6px;
-            background: red;
-            color: #fff;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            cursor: pointer;
-        }
-        .category-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-top: 10px;
-        }
+        .photo-preview { width: 60px; height: 60px; border-radius: 12px; background-size: cover; background-position: center; position: relative; flex-shrink: 0; }
+        .photo-preview .remove { position: absolute; top: -6px; right: -6px; background: red; color: #fff; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 12px; cursor: pointer; }
+        .category-group { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
         .category-group .chip { cursor: pointer; }
-        .candidate-card {
-            position: relative;
-            min-height: 360px;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 24px 20px;
-            background-size: cover;
-            background-position: center;
-            border-radius: 24px;
-            overflow: hidden;
-        }
-        .candidate-card .gradient {
-            position: absolute;
-            bottom: 0; left: 0; right: 0;
-            height: 60%;
-            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
-        }
-        .candidate-card .info {
-            position: relative;
-            z-index: 1;
-            color: #fff;
-        }
+        .candidate-card { position: relative; min-height: 360px; display: flex; flex-direction: column; justify-content: flex-end; padding: 24px 20px; background-size: cover; background-position: center; border-radius: 24px; overflow: hidden; }
+        .candidate-card .gradient { position: absolute; bottom: 0; left: 0; right: 0; height: 60%; background: linear-gradient(to top, rgba(0,0,0,0.7), transparent); }
+        .candidate-card .info { position: relative; z-index: 1; color: #fff; }
         .candidate-card .info h2 { font-size: 24px; margin-bottom: 4px; }
         .candidate-card .info .purpose-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
-        .candidate-card .info .purpose-tags span {
-            background: rgba(255,255,255,0.15);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-        }
-        .candidate-actions {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 20px;
-        }
-        .candidate-actions button {
-            width: 64px; height: 64px;
-            border-radius: 50%;
-            border: none;
-            font-size: 28px;
-            cursor: pointer;
-            transition: 0.15s;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
+        .candidate-card .info .purpose-tags span { background: rgba(255,255,255,0.15); padding: 4px 12px; border-radius: 20px; font-size: 12px; }
+        .candidate-actions { display: flex; justify-content: space-around; margin-top: 20px; }
+        .candidate-actions button { width: 64px; height: 64px; border-radius: 50%; border: none; font-size: 28px; cursor: pointer; transition: 0.15s; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
         .candidate-actions button:active { transform: scale(0.88); }
         .candidate-actions .dislike { background: #ff5252; color: #fff; }
         .candidate-actions .like { background: #69f0ae; color: #1b5e20; }
-        .chat-list-item {
-            display: flex;
-            align-items: center;
-            padding: 14px 0;
-            border-bottom: 1px solid rgba(128,128,128,0.1);
-            cursor: pointer;
-        }
-        .chat-list-item .avatar {
-            width: 48px; height: 48px;
-            border-radius: 50%;
-            background: rgba(128,128,128,0.2);
-            margin-right: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-        }
+        .chat-list-item { display: flex; align-items: center; padding: 14px 0; border-bottom: 1px solid rgba(128,128,128,0.1); cursor: pointer; }
+        .chat-list-item .avatar { width: 48px; height: 48px; border-radius: 50%; background: rgba(128,128,128,0.2); margin-right: 14px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
         .chat-list-item .details { flex: 1; }
         .chat-list-item .details .name { font-weight: 600; }
         .chat-list-item .details .last-msg { font-size: 14px; opacity: 0.6; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 180px; }
-        .chat-messages {
-            max-height: 400px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            padding: 8px 0;
-        }
-        .chat-messages .msg {
-            padding: 10px 16px;
-            border-radius: 20px;
-            max-width: 80%;
-            word-break: break-word;
-        }
-        .chat-messages .msg.mine {
-            background: #7c4dff;
-            color: #fff;
-            align-self: flex-end;
-            border-bottom-right-radius: 4px;
-        }
-        .chat-messages .msg.theirs {
-            background: rgba(128,128,128,0.15);
-            align-self: flex-start;
-            border-bottom-left-radius: 4px;
-        }
-        .chat-input {
-            display: flex;
-            gap: 10px;
-            margin-top: 12px;
-        }
-        .chat-input input {
-            flex: 1;
-            padding: 12px 16px;
-            border-radius: 40px;
-            border: 1px solid rgba(128,128,128,0.2);
-            background: rgba(255,255,255,0.05);
-            outline: none;
-            font-size: 16px;
-        }
-        .chat-input button {
-            padding: 12px 24px;
-            border-radius: 40px;
-            border: none;
-            background: #7c4dff;
-            color: #fff;
-            font-weight: 600;
-            cursor: pointer;
-        }
-        @media (max-width: 480px) {
-            .container { padding: 16px 12px; }
-            .candidate-card { min-height: 300px; }
-        }
+        .chat-messages { max-height: 400px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding: 8px 0; }
+        .chat-messages .msg { padding: 10px 16px; border-radius: 20px; max-width: 80%; word-break: break-word; }
+        .chat-messages .msg.mine { background: #7c4dff; color: #fff; align-self: flex-end; border-bottom-right-radius: 4px; }
+        .chat-messages .msg.theirs { background: rgba(128,128,128,0.15); align-self: flex-start; border-bottom-left-radius: 4px; }
+        .chat-input { display: flex; gap: 10px; margin-top: 12px; }
+        .chat-input input { flex: 1; padding: 12px 16px; border-radius: 40px; border: 1px solid rgba(128,128,128,0.2); background: rgba(255,255,255,0.05); outline: none; font-size: 16px; }
+        .chat-input button { padding: 12px 24px; border-radius: 40px; border: none; background: #7c4dff; color: #fff; font-weight: 600; cursor: pointer; }
+        @media (max-width: 480px) { .container { padding: 16px 12px; } .candidate-card { min-height: 300px; } }
         .hidden { display: none !important; }
         .text-center { text-align: center; }
         .mt-12 { margin-top: 12px; }
@@ -374,7 +82,6 @@
     </style>
 </head>
 <body>
-    <!-- ===== ОВЕРЛЕЙ ЗАМОЧКА ===== -->
     <div id="lockOverlay" class="lock-overlay">
         <div class="lock-icon">🔒</div>
         <h2>Доступ закрыт</h2>
@@ -382,9 +89,7 @@
         <button class="btn-primary" onclick="buyAccess()">Купить доступ за 200 Stars</button>
     </div>
 
-    <!-- ===== КОНТЕЙНЕР ===== -->
     <div class="container" id="app">
-        <!-- СТРАНИЦА: ВЫБОР ТЕМЫ -->
         <div id="pageTheme" class="page active">
             <div class="card">
                 <h2 style="margin-bottom: 8px;">Выбери своё настроение</h2>
@@ -392,29 +97,21 @@
                 <div class="theme-selector">
                     <div class="theme-card" data-theme="romantic" onclick="selectTheme('romantic')">
                         <div class="preview" style="background:#fce4ec; color:#e91e63;">❤️</div>
-                        <div class="info">
-                            <h3>Романтичный</h3>
-                            <p>Мягкие тона, уют, тепло</p>
-                        </div>
+                        <div class="info"><h3>Романтичный</h3><p>Мягкие тона, уют, тепло</p></div>
                     </div>
                     <div class="theme-card" data-theme="game" onclick="selectTheme('game')">
                         <div class="preview" style="background:#0d0d1a; color:#7c4dff;">🎮</div>
-                        <div class="info">
-                            <h3>Игровой</h3>
-                            <p>Неон, динамика, драйв</p>
-                        </div>
+                        <div class="info"><h3>Игровой</h3><p>Неон, динамика, драйв</p></div>
                     </div>
                 </div>
                 <button id="themeConfirmBtn" class="btn-primary mt-20" style="display:none;" onclick="applyTheme()">Продолжить →</button>
             </div>
         </div>
 
-        <!-- СТРАНИЦА: АНКЕТА -->
         <div id="pageProfile" class="page">
             <div class="card">
                 <h2 style="margin-bottom: 4px;">Заполни анкету</h2>
                 <p style="opacity:0.6; font-size:14px;">Расскажи о себе, чтобы найти своих</p>
-
                 <div style="margin-top: 16px;">
                     <label style="font-weight:600; font-size:14px;">Фото (до 3)</label>
                     <div class="photo-upload" id="photoContainer">
@@ -423,7 +120,6 @@
                     </div>
                     <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:6px;" id="photoPreviewContainer"></div>
                 </div>
-
                 <div style="margin-top: 14px;">
                     <label style="font-weight:600; font-size:14px;">Город</label>
                     <input class="input-field" id="profileCity" placeholder="Например, Москва" />
@@ -459,12 +155,9 @@
             </div>
         </div>
 
-        <!-- СТРАНИЦА: КАНДИДАТЫ -->
         <div id="pageCandidates" class="page">
             <div class="card" id="candidateContainer">
-                <div id="candidateInner">
-                    <p class="text-center" style="opacity:0.5;">Загрузка...</p>
-                </div>
+                <div id="candidateInner"><p class="text-center" style="opacity:0.5;">Загрузка...</p></div>
             </div>
             <div style="display:flex; justify-content:center; gap:20px; margin-top: 12px;">
                 <button onclick="swipe('dislike')" style="background:#ff5252; border:none; border-radius:50%; width:60px; height:60px; font-size:30px; color:#fff;">✕</button>
@@ -472,17 +165,13 @@
             </div>
         </div>
 
-        <!-- СТРАНИЦА: ЧАТЫ -->
         <div id="pageChats" class="page">
             <div class="card">
                 <h2 style="margin-bottom: 12px;">Мои чаты</h2>
-                <div id="chatList">
-                    <p class="text-center" style="opacity:0.5;">Пока нет чатов</p>
-                </div>
+                <div id="chatList"><p class="text-center" style="opacity:0.5;">Пока нет чатов</p></div>
             </div>
         </div>
 
-        <!-- СТРАНИЦА: ОДИН ЧАТ -->
         <div id="pageChat" class="page">
             <div class="card">
                 <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
@@ -499,16 +188,8 @@
     </div>
 
     <script>
-        // ===== КОНСТАНТЫ =====
         const API_BASE = 'https://garage-courier-everybody.ngrok-free.dev';
-
-        const ALL_PURPOSES = [
-            'Дружба', 'Общение', 'Флирт', 'Романтика',
-            'Свидания', 'Близость', 'Вместе', 'Спонтанность',
-            'Интеллект', 'Активный отдых'
-        ];
-
-        // ===== СОСТОЯНИЕ =====
+        const ALL_PURPOSES = ['Дружба','Общение','Флирт','Романтика','Свидания','Близость','Вместе','Спонтанность','Интеллект','Активный отдых'];
         let state = {
             theme: localStorage.getItem('tuktuk_theme') || null,
             profile: null,
@@ -523,7 +204,6 @@
             trialRemaining: 0,
         };
 
-        // ===== ПОЛУЧЕНИЕ FALLBACK USER_ID =====
         function getFallbackUserId() {
             let uid = localStorage.getItem('tuktuk_fallback_user_id');
             if (!uid) {
@@ -533,7 +213,6 @@
             return parseInt(uid, 10);
         }
 
-        // ===== ИНИЦИАЛИЗАЦИЯ =====
         async function init() {
             if (window.Telegram && window.Telegram.WebApp) {
                 window.Telegram.WebApp.ready();
@@ -541,9 +220,7 @@
             } else {
                 console.warn('Not inside Telegram WebApp. Using fallback mode.');
             }
-
             await checkAccess();
-
             if (!state.theme) {
                 showPage('pageTheme');
             } else {
@@ -558,11 +235,9 @@
                 }
                 loadChats();
             }
-
             document.getElementById('fileInput').addEventListener('change', handleFileUpload);
         }
 
-        // ===== РАБОТА С ТЕМОЙ =====
         function selectTheme(theme) {
             state.theme = theme;
             document.querySelectorAll('.theme-card').forEach(el => el.classList.toggle('selected', el.dataset.theme === theme));
@@ -578,27 +253,22 @@
             showPage('pageProfile');
         }
 
-        function applyThemeToBody(theme) {
-            document.body.className = theme;
-        }
+        function applyThemeToBody(theme) { document.body.className = theme; }
 
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
         }
 
-        // ===== ЗАПРОСЫ К API =====
         async function apiCall(action, data = {}) {
             let initData = '';
             if (window.Telegram && window.Telegram.WebApp) {
                 initData = window.Telegram.WebApp.initData || '';
             }
-
             if (!initData) {
                 data.user_id = getFallbackUserId();
                 console.log('Using fallback user_id in API call:', data.user_id);
             }
-
             const resp = await fetch(`${API_BASE}/api`, {
                 method: 'POST',
                 headers: {
@@ -614,36 +284,33 @@
             return resp.json();
         }
 
-        // ===== ПРОВЕРКА ДОСТУПА =====
         async function checkAccess() {
             try {
                 const res = await apiCall('check_access');
                 state.access = res.access;
                 state.premium = res.premium;
                 state.trialRemaining = res.remaining || 0;
-                if (!state.access && !state.premium) {
-                    document.getElementById('lockOverlay').classList.add('show');
-                } else {
+                // Если доступ есть или премиум - скрываем замочек
+                if (state.access || state.premium) {
                     document.getElementById('lockOverlay').classList.remove('show');
+                } else {
+                    document.getElementById('lockOverlay').classList.add('show');
                 }
             } catch (e) {
                 console.error('checkAccess error', e);
+                // В случае ошибки тоже скрываем, чтобы не мешать тесту
+                document.getElementById('lockOverlay').classList.remove('show');
             }
         }
 
-        // ===== ПОКУПКА ДОСТУПА (отправка команды боту) =====
         function buyAccess() {
             if (window.Telegram && window.Telegram.WebApp) {
-                // Отправляем команду боту через WebApp
                 window.Telegram.WebApp.sendData('buy_dating');
-                // Бот пришлёт инвойс в чат
             } else {
-                // Если не внутри Telegram — напоминаем, что надо открыть через бота
                 alert('Открой это приложение через бота, чтобы оплатить.');
             }
         }
 
-        // ===== ПРОФИЛЬ =====
         async function loadProfile() {
             try {
                 const res = await apiCall('get_profile');
@@ -660,9 +327,7 @@
                     state.selectedPurposes = state.profile.purposes || [];
                     renderPurposeChips();
                 }
-            } catch (e) {
-                console.error('loadProfile error', e);
-            }
+            } catch (e) { console.error('loadProfile error', e); }
         }
 
         async function saveProfile() {
@@ -673,23 +338,14 @@
             const interests = document.getElementById('profileInterests').value.trim();
             const hideIntimate = document.getElementById('profileHideIntimate').checked;
 
-            if (!city || !age || age < 18) {
-                alert('Заполните город и возраст (18+)');
-                return;
-            }
-            if (state.selectedPurposes.length === 0) {
-                alert('Выберите хотя бы одну категорию');
-                return;
-            }
+            if (!city || !age || age < 18) { alert('Заполните город и возраст (18+)'); return; }
+            if (state.selectedPurposes.length === 0) { alert('Выберите хотя бы одну категорию'); return; }
 
             const payload = {
                 photos: state.uploadedPhotos,
-                city,
-                age,
-                gender,
+                city, age, gender,
                 purposes: state.selectedPurposes,
-                description,
-                interests,
+                description, interests,
                 hide_from_intimate: hideIntimate,
             };
 
@@ -700,19 +356,15 @@
                 renderPurposeChips();
                 await loadCandidates();
                 showPage('pageCandidates');
-            } catch (e) {
-                alert('Ошибка: ' + e.message);
-            }
+            } catch (e) { alert('Ошибка: ' + e.message); }
         }
 
-        // ===== ФОТО =====
         async function handleFileUpload(e) {
             const files = e.target.files;
             if (!files.length) return;
             for (const file of files) {
                 const formData = new FormData();
                 formData.append('file', file);
-                
                 let initData = '';
                 if (window.Telegram && window.Telegram.WebApp) {
                     initData = window.Telegram.WebApp.initData || '';
@@ -722,7 +374,6 @@
                     formData.append('user_id', fallbackUserId);
                     console.log('Upload: using fallback user_id:', fallbackUserId);
                 }
-
                 try {
                     const resp = await fetch(`${API_BASE}/upload_photo`, {
                         method: 'POST',
@@ -736,7 +387,7 @@
                         state.uploadedPhotos.push(result.url);
                         renderPhotoPreviews();
                     } else {
-                        alert('Ошибка загрузки фото: ' + (result.error || 'неизвестная ошибка'));
+                        alert('Ошибка загрузки фото: ' + (result.error || 'неизвестная ошибка') + '\nДетали: ' + (result.details || ''));
                     }
                 } catch (err) {
                     alert('Ошибка сети при загрузке фото');
@@ -748,10 +399,7 @@
 
         function renderPhotoPreviews() {
             const container = document.getElementById('photoPreviewContainer');
-            if (state.uploadedPhotos.length === 0) {
-                container.innerHTML = '';
-                return;
-            }
+            if (state.uploadedPhotos.length === 0) { container.innerHTML = ''; return; }
             container.innerHTML = state.uploadedPhotos.map(url => `
                 <div class="photo-preview" style="background-image: url(${url});">
                     <span class="remove" onclick="removePhoto('${url}')">×</span>
@@ -764,7 +412,6 @@
             renderPhotoPreviews();
         }
 
-        // ===== КАТЕГОРИИ =====
         function renderPurposeChips() {
             const container = document.getElementById('purposeChips');
             container.innerHTML = ALL_PURPOSES.map(p =>
@@ -781,16 +428,13 @@
             renderPurposeChips();
         }
 
-        // ===== КАНДИДАТЫ =====
         async function loadCandidates() {
             try {
                 const res = await apiCall('get_candidates');
                 state.candidates = res.candidates || [];
                 state.currentCandidateIndex = 0;
                 renderCandidate();
-            } catch (e) {
-                console.error('loadCandidates error', e);
-            }
+            } catch (e) { console.error('loadCandidates error', e); }
         }
 
         function renderCandidate() {
@@ -800,10 +444,7 @@
                 return;
             }
             const cand = state.candidates[state.currentCandidateIndex];
-            if (!cand) {
-                container.innerHTML = '<p class="text-center" style="opacity:0.5;">Нет новых кандидатов.</p>';
-                return;
-            }
+            if (!cand) { container.innerHTML = '<p class="text-center" style="opacity:0.5;">Нет новых кандидатов.</p>'; return; }
             const photo = cand.photos && cand.photos.length ? cand.photos[0] : '';
             container.innerHTML = `
                 <div class="candidate-card" style="background-image: url('${photo}'); background-size: cover; background-position: center;">
@@ -824,10 +465,7 @@
             try {
                 if (action === 'like') {
                     const res = await apiCall('like', { target_id: cand.user_id });
-                    if (res.mutual) {
-                        alert('Взаимный лайк! Чат открыт.');
-                        loadChats();
-                    }
+                    if (res.mutual) { alert('Взаимный лайк! Чат открыт.'); loadChats(); }
                 } else {
                     await apiCall('dislike', { target_id: cand.user_id });
                 }
@@ -837,28 +475,20 @@
                 } else {
                     renderCandidate();
                 }
-            } catch (e) {
-                alert('Ошибка: ' + e.message);
-            }
+            } catch (e) { alert('Ошибка: ' + e.message); }
         }
 
-        // ===== ЧАТЫ =====
         async function loadChats() {
             try {
                 const res = await apiCall('get_chats');
                 state.chats = res.chats || [];
                 renderChatList();
-            } catch (e) {
-                console.error('loadChats error', e);
-            }
+            } catch (e) { console.error('loadChats error', e); }
         }
 
         function renderChatList() {
             const container = document.getElementById('chatList');
-            if (state.chats.length === 0) {
-                container.innerHTML = '<p class="text-center" style="opacity:0.5;">Пока нет чатов</p>';
-                return;
-            }
+            if (state.chats.length === 0) { container.innerHTML = '<p class="text-center" style="opacity:0.5;">Пока нет чатов</p>'; return; }
             container.innerHTML = state.chats.map(chat =>
                 `<div class="chat-list-item" onclick="openChat(${chat.id}, '${chat.partner_name}')">
                     <div class="avatar">💬</div>
@@ -870,10 +500,7 @@
             ).join('');
         }
 
-        function goToChats() {
-            showPage('pageChats');
-            loadChats();
-        }
+        function goToChats() { showPage('pageChats'); loadChats(); }
 
         async function openChat(chatId, partnerName) {
             state.currentChatId = chatId;
@@ -894,9 +521,7 @@
                     `<div class="msg ${msg.sender_id === window.Telegram?.WebApp?.initData ? 'mine' : 'theirs'}">${msg.message}</div>`
                 ).join('');
                 container.scrollTop = container.scrollHeight;
-            } catch (e) {
-                console.error('loadMessages error', e);
-            }
+            } catch (e) { console.error('loadMessages error', e); }
         }
 
         async function sendChatMessage() {
@@ -907,19 +532,11 @@
             try {
                 await apiCall('send_message', { chat_id: state.currentChatId, message: text });
                 await loadMessages();
-            } catch (e) {
-                alert('Ошибка отправки');
-            }
+            } catch (e) { alert('Ошибка отправки'); }
         }
 
-        // ===== ЗАПУСК =====
         document.addEventListener('DOMContentLoaded', init);
-
-        // Вспомогательные функции для сброса (для теста)
-        window.resetTheme = () => {
-            localStorage.removeItem('tuktuk_theme');
-            location.reload();
-        };
+        window.resetTheme = () => { localStorage.removeItem('tuktuk_theme'); location.reload(); };
         window.showProfile = () => showPage('pageProfile');
         window.showCandidates = () => showPage('pageCandidates');
         window.showChats = () => showPage('pageChats');
