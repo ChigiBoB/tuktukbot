@@ -218,42 +218,205 @@
             opacity: 0.6;
             margin: 0;
         }
-        .photo-upload { display: flex; gap: 12px; overflow-x: auto; padding: 8px 0; flex-wrap: wrap; }
-        .photo-upload .add-btn { width: 80px; height: 80px; border-radius: 16px; border: 2px dashed rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; font-size: 32px; cursor: pointer; flex-shrink: 0; }
+        .photo-upload {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding: 8px 0;
+            flex-wrap: wrap;
+        }
+        .photo-upload .add-btn {
+            width: 80px;
+            height: 80px;
+            border-radius: 16px;
+            border: 2px dashed rgba(255,255,255,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
         body.game .photo-upload .add-btn { border-color: rgba(180,100,255,0.25); }
-        .photo-preview { width: 60px; height: 60px; border-radius: 12px; background-size: cover; background-position: center; position: relative; flex-shrink: 0; }
-        .photo-preview .remove { position: absolute; top: -6px; right: -6px; background: red; color: #fff; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 12px; cursor: pointer; }
-        .category-group { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+        .photo-preview {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            flex-shrink: 0;
+        }
+        .photo-preview .remove {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            background: red;
+            color: #fff;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        .category-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 10px;
+        }
         .category-group .chip { cursor: pointer; }
-        .candidate-card { position: relative; min-height: 360px; display: flex; flex-direction: column; justify-content: flex-end; padding: 24px 20px; background-size: cover; background-position: center; border-radius: 24px; overflow: hidden; }
-        .candidate-card .gradient { position: absolute; bottom: 0; left: 0; right: 0; height: 60%; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); }
-        .candidate-card .info { position: relative; z-index: 1; color: #fff; }
+        .candidate-card {
+            position: relative;
+            min-height: 360px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 24px 20px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 24px;
+            overflow: hidden;
+        }
+        .candidate-card .gradient {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60%;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+        }
+        .candidate-card .info {
+            position: relative;
+            z-index: 1;
+            color: #fff;
+        }
         .candidate-card .info h2 { font-size: 24px; margin-bottom: 4px; }
-        .candidate-card .info .purpose-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
-        .candidate-card .info .purpose-tags span { background: rgba(255,255,255,0.15); padding: 4px 12px; border-radius: 20px; font-size: 12px; }
-        .candidate-actions { display: flex; justify-content: space-around; margin-top: 20px; }
-        .candidate-actions button { width: 64px; height: 64px; border-radius: 50%; border: none; font-size: 28px; cursor: pointer; transition: 0.15s; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+        .candidate-card .info .purpose-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin: 8px 0;
+        }
+        .candidate-card .info .purpose-tags span {
+            background: rgba(255,255,255,0.15);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+        .candidate-actions {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .candidate-actions button {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            transition: 0.15s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
         .candidate-actions button:active { transform: scale(0.88); }
         .candidate-actions .dislike { background: #ff5252; color: #fff; }
         .candidate-actions .like { background: #69f0ae; color: #1b5e20; }
-        .chat-list-item { display: flex; align-items: center; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.05); cursor: pointer; }
-        .chat-list-item .avatar { width: 48px; height: 48px; border-radius: 50%; background: rgba(255,255,255,0.05); margin-right: 14px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+        .chat-list-item {
+            display: flex;
+            align-items: center;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            cursor: pointer;
+        }
+        .chat-list-item .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+            margin-right: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
         .chat-list-item .details { flex: 1; }
         .chat-list-item .details .name { font-weight: 600; }
-        .chat-list-item .details .last-msg { font-size: 14px; opacity: 0.5; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 180px; }
-        .chat-messages { max-height: 400px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding: 8px 0; }
-        .chat-messages .msg { padding: 10px 16px; border-radius: 20px; max-width: 80%; word-break: break-word; }
-        .chat-messages .msg.mine { background: #7c4dff; color: #fff; align-self: flex-end; border-bottom-right-radius: 4px; }
-        .chat-messages .msg.theirs { background: rgba(255,255,255,0.05); align-self: flex-start; border-bottom-left-radius: 4px; }
-        .chat-input { display: flex; gap: 10px; margin-top: 12px; }
-        .chat-input input { flex: 1; padding: 12px 16px; border-radius: 40px; border: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.03); outline: none; color: #eee; font-size: 16px; }
-        .chat-input button { padding: 12px 24px; border-radius: 40px; border: none; background: #7c4dff; color: #fff; font-weight: 600; cursor: pointer; }
-        @media (max-width: 480px) { .container { padding: 16px 12px; } .candidate-card { min-height: 300px; } }
+        .chat-list-item .details .last-msg {
+            font-size: 14px;
+            opacity: 0.5;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 180px;
+        }
+        .chat-messages {
+            max-height: 400px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 8px 0;
+        }
+        .chat-messages .msg {
+            padding: 10px 16px;
+            border-radius: 20px;
+            max-width: 80%;
+            word-break: break-word;
+        }
+        .chat-messages .msg.mine {
+            background: #7c4dff;
+            color: #fff;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+        .chat-messages .msg.theirs {
+            background: rgba(255,255,255,0.05);
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+        .chat-input {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+        }
+        .chat-input input {
+            flex: 1;
+            padding: 12px 16px;
+            border-radius: 40px;
+            border: 1px solid rgba(255,255,255,0.05);
+            background: rgba(255,255,255,0.03);
+            outline: none;
+            color: #eee;
+            font-size: 16px;
+        }
+        .chat-input button {
+            padding: 12px 24px;
+            border-radius: 40px;
+            border: none;
+            background: #7c4dff;
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        @media (max-width: 480px) {
+            .container { padding: 16px 12px; }
+            .candidate-card { min-height: 300px; }
+        }
         .hidden { display: none !important; }
         .text-center { text-align: center; }
         .mt-12 { margin-top: 12px; }
         .mt-20 { margin-top: 20px; }
-        #photoPreviewContainer { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+        #photoPreviewContainer {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 6px;
+            min-height: 40px;
+        }
     </style>
 </head>
 <body>
@@ -265,6 +428,7 @@
     </div>
 
     <div class="container" id="app">
+        <!-- ВЫБОР ТЕМЫ -->
         <div id="pageTheme" class="page active">
             <div class="card">
                 <h2>Выбери своё настроение</h2>
@@ -289,6 +453,7 @@
             </div>
         </div>
 
+        <!-- АНКЕТА -->
         <div id="pageProfile" class="page">
             <div class="card">
                 <h2 style="margin-bottom: 4px;">Заполни анкету</h2>
@@ -336,6 +501,7 @@
             </div>
         </div>
 
+        <!-- КАНДИДАТЫ -->
         <div id="pageCandidates" class="page">
             <div class="card" id="candidateContainer">
                 <div id="candidateInner"><p class="text-center" style="opacity:0.5;">Загрузка...</p></div>
@@ -346,6 +512,7 @@
             </div>
         </div>
 
+        <!-- ЧАТЫ -->
         <div id="pageChats" class="page">
             <div class="card">
                 <h2 style="margin-bottom: 12px;">Мои чаты</h2>
@@ -353,6 +520,7 @@
             </div>
         </div>
 
+        <!-- ОДИН ЧАТ -->
         <div id="pageChat" class="page">
             <div class="card">
                 <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
@@ -535,7 +703,7 @@
             }
         }
 
-        // ===== ИСПРАВЛЕННАЯ ЗАГРУЗКА ФОТО (user_id в URL) =====
+        // === ИСПРАВЛЕННАЯ ЗАГРУЗКА ФОТО С ПРИНУДИТЕЛЬНЫМ ОБНОВЛЕНИЕМ ===
         async function handleFileUpload(e) {
             const files = e.target.files;
             if (!files.length) return;
@@ -560,7 +728,8 @@
                     const result = await resp.json();
                     if (result.success) {
                         state.uploadedPhotos.push(result.url);
-                        renderPhotoPreviews();
+                        console.log('Фото загружено, URL:', result.url);
+                        renderPhotoPreviews(); // принудительно обновляем
                     } else {
                         alert('Ошибка загрузки фото: ' + (result.error || 'неизвестная ошибка'));
                     }
@@ -574,15 +743,20 @@
 
         function renderPhotoPreviews() {
             const container = document.getElementById('photoPreviewContainer');
+            if (!container) {
+                console.error('Контейнер photoPreviewContainer не найден!');
+                return;
+            }
             if (state.uploadedPhotos.length === 0) {
                 container.innerHTML = '';
                 return;
             }
             container.innerHTML = state.uploadedPhotos.map(url => `
-                <div class="photo-preview" style="background-image: url(${url});">
+                <div class="photo-preview" style="background-image: url(${url}); background-size: cover; background-position: center;">
                     <span class="remove" onclick="removePhoto('${url}')">×</span>
                 </div>
             `).join('');
+            console.log('Превью обновлены, количество фото:', state.uploadedPhotos.length);
         }
 
         function removePhoto(url) {
