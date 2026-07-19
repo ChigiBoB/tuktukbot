@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Тук-тук, кто тут?</title>
     <style>
-        /* ===== БАЗА ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: -apple-system, system-ui, sans-serif;
@@ -14,7 +13,6 @@
             background: #0b0b1a;
             color: #eee;
         }
-        /* ===== ТЕМЫ ===== */
         body.romantic {
             background: linear-gradient(145deg, #1a0b12, #2d1b2e);
             color: #f0d0d0;
@@ -121,7 +119,6 @@
             color: #fff;
             border-color: #7c4dff;
         }
-        /* ===== ОБЩИЕ КОМПОНЕНТЫ ===== */
         .container {
             max-width: 480px;
             margin: 0 auto;
@@ -138,16 +135,6 @@
             width: 100%;
             cursor: pointer;
         }
-        .btn-secondary {
-            background: transparent;
-            border: 2px solid currentColor;
-            border-radius: 40px;
-            padding: 14px 28px;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            transition: 0.2s;
-        }
         .lock-overlay {
             display: none;
             position: fixed;
@@ -162,14 +149,9 @@
             text-align: center;
         }
         .lock-overlay.show { display: flex; }
-        .lock-overlay .lock-icon {
-            font-size: 64px;
-            margin-bottom: 20px;
-        }
+        .lock-overlay .lock-icon { font-size: 64px; margin-bottom: 20px; }
         .lock-overlay h2 { color: #fff; margin-bottom: 12px; }
         .lock-overlay p { color: #ddd; max-width: 300px; margin-bottom: 24px; }
-        /* ===== СПЕЦИФИЧНЫЕ СТРАНИЦЫ ===== */
-        /* Экран выбора темы – новый стиль */
         #pageTheme .card {
             background: rgba(255,255,255,0.03);
             backdrop-filter: blur(16px);
@@ -236,7 +218,6 @@
             opacity: 0.6;
             margin: 0;
         }
-        /* Остальные стили как раньше, но адаптированы под тёмный фон */
         .photo-upload { display: flex; gap: 12px; overflow-x: auto; padding: 8px 0; flex-wrap: wrap; }
         .photo-upload .add-btn { width: 80px; height: 80px; border-radius: 16px; border: 2px dashed rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; font-size: 32px; cursor: pointer; flex-shrink: 0; }
         body.game .photo-upload .add-btn { border-color: rgba(180,100,255,0.25); }
@@ -272,7 +253,6 @@
         .text-center { text-align: center; }
         .mt-12 { margin-top: 12px; }
         .mt-20 { margin-top: 20px; }
-        .gap-8 { gap: 8px; }
         #photoPreviewContainer { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
     </style>
 </head>
@@ -285,6 +265,7 @@
     </div>
 
     <div class="container" id="app">
+        <!-- ВЫБОР ТЕМЫ -->
         <div id="pageTheme" class="page active">
             <div class="card">
                 <h2>Выбери своё настроение</h2>
@@ -309,6 +290,7 @@
             </div>
         </div>
 
+        <!-- АНКЕТА -->
         <div id="pageProfile" class="page">
             <div class="card">
                 <h2 style="margin-bottom: 4px;">Заполни анкету</h2>
@@ -356,6 +338,7 @@
             </div>
         </div>
 
+        <!-- КАНДИДАТЫ -->
         <div id="pageCandidates" class="page">
             <div class="card" id="candidateContainer">
                 <div id="candidateInner"><p class="text-center" style="opacity:0.5;">Загрузка...</p></div>
@@ -366,6 +349,7 @@
             </div>
         </div>
 
+        <!-- ЧАТЫ -->
         <div id="pageChats" class="page">
             <div class="card">
                 <h2 style="margin-bottom: 12px;">Мои чаты</h2>
@@ -373,6 +357,7 @@
             </div>
         </div>
 
+        <!-- ОДИН ЧАТ -->
         <div id="pageChat" class="page">
             <div class="card">
                 <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
@@ -418,8 +403,6 @@
             if (window.Telegram && window.Telegram.WebApp) {
                 window.Telegram.WebApp.ready();
                 console.log('Telegram WebApp initialized');
-            } else {
-                console.warn('Not inside Telegram WebApp. Using fallback mode.');
             }
             await checkAccess();
             if (!state.theme) {
