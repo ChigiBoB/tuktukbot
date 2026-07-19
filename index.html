@@ -562,6 +562,8 @@
                 applyThemeToBody(state.theme);
                 // Пытаемся загрузить профиль
                 await loadProfile();
+                // ВСЕГДА рендерим категории (даже если профиля нет)
+                renderPurposeChips();
                 if (state.profile) {
                     // Если профиль есть, идём на кандидатов
                     await loadCandidates();
@@ -590,6 +592,7 @@
             applyThemeToBody(state.theme);
             // После выбора темы переходим к анкете
             loadProfile();
+            renderPurposeChips(); // <-- гарантируем рендер чипсов
             showPage('pageProfile');
         }
 
@@ -668,7 +671,7 @@
                     state.uploadedPhotos = state.profile.photos || [];
                     renderPhotoPreviews();
                     state.selectedPurposes = state.profile.purposes || [];
-                    renderPurposeChips();
+                    renderPurposeChips(); // обновляем чипсы из профиля
                 }
             } catch (e) {
                 console.error('loadProfile error', e);
@@ -708,6 +711,7 @@
                 await apiCall('create_profile', payload);
                 alert('Профиль сохранён!');
                 await loadProfile();
+                renderPurposeChips(); // <-- обновляем чипсы после сохранения
                 await loadCandidates();
                 showPage('pageCandidates');
             } catch (e) {
