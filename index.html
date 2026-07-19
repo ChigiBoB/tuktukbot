@@ -7,71 +7,265 @@
     <style>
         /* ===== БАЗА ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, system-ui, sans-serif; transition: background 0.3s, color 0.3s; min-height: 100vh; background: #f5f5f5; color: #333; }
-        body.romantic { background: #fce4ec; color: #4a2c3a; }
-        body.romantic .card { background: rgba(255,255,255,0.8); backdrop-filter: blur(10px); border-radius: 24px; box-shadow: 0 8px 32px rgba(233,30,99,0.15); border: 1px solid rgba(255,255,255,0.3); }
-        body.romantic .btn-primary { background: #e91e63; color: #fff; border: none; border-radius: 40px; padding: 16px 32px; font-size: 18px; font-weight: 600; transition: 0.2s; box-shadow: 0 4px 16px rgba(233,30,99,0.3); }
+        body {
+            font-family: -apple-system, system-ui, sans-serif;
+            transition: background 0.3s, color 0.3s;
+            min-height: 100vh;
+            background: #0b0b1a;
+            color: #eee;
+        }
+        /* ===== ТЕМЫ ===== */
+        body.romantic {
+            background: linear-gradient(145deg, #1a0b12, #2d1b2e);
+            color: #f0d0d0;
+        }
+        body.romantic .card {
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(12px);
+            border-radius: 28px;
+            box-shadow: 0 8px 32px rgba(233, 30, 99, 0.2);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        body.romantic .btn-primary {
+            background: linear-gradient(135deg, #e91e63, #c2185b);
+            color: #fff;
+            border: none;
+            border-radius: 40px;
+            padding: 16px 32px;
+            font-size: 18px;
+            font-weight: 600;
+            transition: 0.2s;
+            box-shadow: 0 4px 20px rgba(233, 30, 99, 0.4);
+        }
         body.romantic .btn-primary:active { transform: scale(0.96); }
-        body.romantic .input-field { background: rgba(255,255,255,0.6); border: 1px solid rgba(233,30,99,0.2); border-radius: 16px; padding: 14px 18px; font-size: 16px; width: 100%; outline: none; transition: 0.2s; }
-        body.romantic .input-field:focus { border-color: #e91e63; box-shadow: 0 0 0 3px rgba(233,30,99,0.15); }
-        body.romantic .chip { background: rgba(233,30,99,0.08); border: 1px solid rgba(233,30,99,0.15); border-radius: 40px; padding: 8px 16px; display: inline-block; margin: 4px; transition: 0.2s; color: #4a2c3a; }
-        body.romantic .chip.selected { background: #e91e63; color: #fff; border-color: #e91e63; }
-        body.game { background: #0d0d1a; color: #e0e0ff; }
-        body.game .card { background: rgba(20,20,40,0.85); backdrop-filter: blur(12px); border-radius: 24px; box-shadow: 0 0 40px rgba(100,0,255,0.2); border: 1px solid rgba(180,100,255,0.2); }
-        body.game .btn-primary { background: linear-gradient(135deg, #7c4dff, #b388ff); color: #fff; border: none; border-radius: 40px; padding: 16px 32px; font-size: 18px; font-weight: 600; transition: 0.2s; box-shadow: 0 0 30px rgba(124,77,255,0.3); }
+        body.romantic .input-field {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(233,30,99,0.2);
+            border-radius: 16px;
+            padding: 14px 18px;
+            font-size: 16px;
+            width: 100%;
+            outline: none;
+            color: #f0d0d0;
+            transition: 0.2s;
+        }
+        body.romantic .input-field:focus {
+            border-color: #e91e63;
+            box-shadow: 0 0 0 3px rgba(233,30,99,0.15);
+        }
+        body.romantic .chip {
+            background: rgba(233,30,99,0.08);
+            border: 1px solid rgba(233,30,99,0.15);
+            border-radius: 40px;
+            padding: 8px 16px;
+            display: inline-block;
+            margin: 4px;
+            transition: 0.2s;
+            color: #f0d0d0;
+        }
+        body.romantic .chip.selected {
+            background: #e91e63;
+            color: #fff;
+            border-color: #e91e63;
+        }
+        body.game {
+            background: linear-gradient(145deg, #0a0a1a, #141430);
+            color: #d0d0ff;
+        }
+        body.game .card {
+            background: rgba(20,20,40,0.7);
+            backdrop-filter: blur(12px);
+            border-radius: 28px;
+            box-shadow: 0 8px 32px rgba(100,0,255,0.2);
+            border: 1px solid rgba(180,100,255,0.15);
+        }
+        body.game .btn-primary {
+            background: linear-gradient(135deg, #7c4dff, #b388ff);
+            color: #fff;
+            border: none;
+            border-radius: 40px;
+            padding: 16px 32px;
+            font-size: 18px;
+            font-weight: 600;
+            transition: 0.2s;
+            box-shadow: 0 0 30px rgba(124,77,255,0.3);
+        }
         body.game .btn-primary:active { transform: scale(0.96); }
-        body.game .input-field { background: rgba(255,255,255,0.05); border: 1px solid rgba(180,100,255,0.2); border-radius: 16px; padding: 14px 18px; font-size: 16px; width: 100%; outline: none; color: #e0e0ff; transition: 0.2s; }
-        body.game .input-field:focus { border-color: #7c4dff; box-shadow: 0 0 0 3px rgba(124,77,255,0.3); }
-        body.game .chip { background: rgba(124,77,255,0.12); border: 1px solid rgba(124,77,255,0.2); border-radius: 40px; padding: 8px 16px; display: inline-block; margin: 4px; transition: 0.2s; color: #c0b0ff; }
-        body.game .chip.selected { background: #7c4dff; color: #fff; border-color: #7c4dff; }
-        .container { max-width: 480px; margin: 0 auto; padding: 20px 16px 100px; }
-        .card { padding: 24px 20px; margin-bottom: 20px; }
+        body.game .input-field {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(180,100,255,0.2);
+            border-radius: 16px;
+            padding: 14px 18px;
+            font-size: 16px;
+            width: 100%;
+            outline: none;
+            color: #d0d0ff;
+            transition: 0.2s;
+        }
+        body.game .input-field:focus {
+            border-color: #7c4dff;
+            box-shadow: 0 0 0 3px rgba(124,77,255,0.2);
+        }
+        body.game .chip {
+            background: rgba(124,77,255,0.1);
+            border: 1px solid rgba(124,77,255,0.2);
+            border-radius: 40px;
+            padding: 8px 16px;
+            display: inline-block;
+            margin: 4px;
+            transition: 0.2s;
+            color: #c0b0ff;
+        }
+        body.game .chip.selected {
+            background: #7c4dff;
+            color: #fff;
+            border-color: #7c4dff;
+        }
+        /* ===== ОБЩИЕ КОМПОНЕНТЫ ===== */
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 20px 16px 100px;
+        }
+        .card {
+            padding: 24px 20px;
+            margin-bottom: 20px;
+        }
         .page { display: none; }
         .page.active { display: block; animation: fade 0.3s ease; }
         @keyframes fade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .btn-primary { width: 100%; cursor: pointer; }
-        .btn-secondary { background: transparent; border: 2px solid currentColor; border-radius: 40px; padding: 14px 28px; font-weight: 600; cursor: pointer; width: 100%; transition: 0.2s; }
-        .lock-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(8px); justify-content: center; align-items: center; z-index: 1000; flex-direction: column; padding: 40px; text-align: center; }
+        .btn-primary {
+            width: 100%;
+            cursor: pointer;
+        }
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid currentColor;
+            border-radius: 40px;
+            padding: 14px 28px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.2s;
+        }
+        .lock-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(8px);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            flex-direction: column;
+            padding: 40px;
+            text-align: center;
+        }
         .lock-overlay.show { display: flex; }
-        .lock-overlay .lock-icon { font-size: 64px; margin-bottom: 20px; }
+        .lock-overlay .lock-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
         .lock-overlay h2 { color: #fff; margin-bottom: 12px; }
         .lock-overlay p { color: #ddd; max-width: 300px; margin-bottom: 24px; }
-        .theme-selector { display: flex; flex-direction: column; gap: 16px; }
-        .theme-card { display: flex; align-items: center; padding: 16px 20px; border-radius: 20px; border: 2px solid transparent; transition: 0.2s; cursor: pointer; background: rgba(255,255,255,0.05); }
-        .theme-card.selected { border-color: currentColor; background: rgba(255,255,255,0.12); }
-        .theme-card .preview { width: 60px; height: 60px; border-radius: 16px; margin-right: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px; }
+        /* ===== СПЕЦИФИЧНЫЕ СТРАНИЦЫ ===== */
+        /* Экран выбора темы – новый стиль */
+        #pageTheme .card {
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255,255,255,0.06);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+        #pageTheme h2 {
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            font-size: 26px;
+            margin-bottom: 4px;
+        }
+        #pageTheme p {
+            opacity: 0.6;
+            margin-bottom: 24px;
+            font-size: 16px;
+        }
+        .theme-selector {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .theme-card {
+            display: flex;
+            align-items: center;
+            padding: 18px 20px;
+            border-radius: 24px;
+            border: 2px solid transparent;
+            transition: all 0.25s ease;
+            cursor: pointer;
+            background: rgba(255,255,255,0.02);
+            backdrop-filter: blur(4px);
+            border-color: rgba(255,255,255,0.04);
+        }
+        .theme-card:hover {
+            transform: scale(1.02);
+            background: rgba(255,255,255,0.06);
+            border-color: rgba(255,255,255,0.12);
+        }
+        .theme-card.selected {
+            border-color: currentColor;
+            background: rgba(255,255,255,0.08);
+            box-shadow: 0 4px 20px rgba(255,255,255,0.05);
+        }
+        .theme-card .preview {
+            width: 64px;
+            height: 64px;
+            border-radius: 20px;
+            margin-right: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            flex-shrink: 0;
+        }
         .theme-card .info { flex: 1; }
-        .theme-card .info h3 { font-size: 18px; margin-bottom: 4px; }
-        .theme-card .info p { font-size: 14px; opacity: 0.7; }
+        .theme-card .info h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .theme-card .info p {
+            font-size: 14px;
+            opacity: 0.6;
+            margin: 0;
+        }
+        /* Остальные стили как раньше, но адаптированы под тёмный фон */
         .photo-upload { display: flex; gap: 12px; overflow-x: auto; padding: 8px 0; flex-wrap: wrap; }
-        .photo-upload .add-btn { width: 80px; height: 80px; border-radius: 16px; border: 2px dashed rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; font-size: 32px; cursor: pointer; flex-shrink: 0; }
-        body.game .photo-upload .add-btn { border-color: rgba(180,100,255,0.3); }
+        .photo-upload .add-btn { width: 80px; height: 80px; border-radius: 16px; border: 2px dashed rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; font-size: 32px; cursor: pointer; flex-shrink: 0; }
+        body.game .photo-upload .add-btn { border-color: rgba(180,100,255,0.25); }
         .photo-preview { width: 60px; height: 60px; border-radius: 12px; background-size: cover; background-position: center; position: relative; flex-shrink: 0; }
         .photo-preview .remove { position: absolute; top: -6px; right: -6px; background: red; color: #fff; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 12px; cursor: pointer; }
         .category-group { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
         .category-group .chip { cursor: pointer; }
         .candidate-card { position: relative; min-height: 360px; display: flex; flex-direction: column; justify-content: flex-end; padding: 24px 20px; background-size: cover; background-position: center; border-radius: 24px; overflow: hidden; }
-        .candidate-card .gradient { position: absolute; bottom: 0; left: 0; right: 0; height: 60%; background: linear-gradient(to top, rgba(0,0,0,0.7), transparent); }
+        .candidate-card .gradient { position: absolute; bottom: 0; left: 0; right: 0; height: 60%; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); }
         .candidate-card .info { position: relative; z-index: 1; color: #fff; }
         .candidate-card .info h2 { font-size: 24px; margin-bottom: 4px; }
         .candidate-card .info .purpose-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
         .candidate-card .info .purpose-tags span { background: rgba(255,255,255,0.15); padding: 4px 12px; border-radius: 20px; font-size: 12px; }
         .candidate-actions { display: flex; justify-content: space-around; margin-top: 20px; }
-        .candidate-actions button { width: 64px; height: 64px; border-radius: 50%; border: none; font-size: 28px; cursor: pointer; transition: 0.15s; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+        .candidate-actions button { width: 64px; height: 64px; border-radius: 50%; border: none; font-size: 28px; cursor: pointer; transition: 0.15s; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
         .candidate-actions button:active { transform: scale(0.88); }
         .candidate-actions .dislike { background: #ff5252; color: #fff; }
         .candidate-actions .like { background: #69f0ae; color: #1b5e20; }
-        .chat-list-item { display: flex; align-items: center; padding: 14px 0; border-bottom: 1px solid rgba(128,128,128,0.1); cursor: pointer; }
-        .chat-list-item .avatar { width: 48px; height: 48px; border-radius: 50%; background: rgba(128,128,128,0.2); margin-right: 14px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+        .chat-list-item { display: flex; align-items: center; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.05); cursor: pointer; }
+        .chat-list-item .avatar { width: 48px; height: 48px; border-radius: 50%; background: rgba(255,255,255,0.05); margin-right: 14px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
         .chat-list-item .details { flex: 1; }
         .chat-list-item .details .name { font-weight: 600; }
-        .chat-list-item .details .last-msg { font-size: 14px; opacity: 0.6; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 180px; }
+        .chat-list-item .details .last-msg { font-size: 14px; opacity: 0.5; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 180px; }
         .chat-messages { max-height: 400px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding: 8px 0; }
         .chat-messages .msg { padding: 10px 16px; border-radius: 20px; max-width: 80%; word-break: break-word; }
         .chat-messages .msg.mine { background: #7c4dff; color: #fff; align-self: flex-end; border-bottom-right-radius: 4px; }
-        .chat-messages .msg.theirs { background: rgba(128,128,128,0.15); align-self: flex-start; border-bottom-left-radius: 4px; }
+        .chat-messages .msg.theirs { background: rgba(255,255,255,0.05); align-self: flex-start; border-bottom-left-radius: 4px; }
         .chat-input { display: flex; gap: 10px; margin-top: 12px; }
-        .chat-input input { flex: 1; padding: 12px 16px; border-radius: 40px; border: 1px solid rgba(128,128,128,0.2); background: rgba(255,255,255,0.05); outline: none; font-size: 16px; }
+        .chat-input input { flex: 1; padding: 12px 16px; border-radius: 40px; border: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.03); outline: none; color: #eee; font-size: 16px; }
         .chat-input button { padding: 12px 24px; border-radius: 40px; border: none; background: #7c4dff; color: #fff; font-weight: 600; cursor: pointer; }
         @media (max-width: 480px) { .container { padding: 16px 12px; } .candidate-card { min-height: 300px; } }
         .hidden { display: none !important; }
@@ -93,16 +287,22 @@
     <div class="container" id="app">
         <div id="pageTheme" class="page active">
             <div class="card">
-                <h2 style="margin-bottom: 8px;">Выбери своё настроение</h2>
-                <p style="opacity:0.6; margin-bottom: 24px;">Какой интерфейс тебе ближе?</p>
+                <h2>Выбери своё настроение</h2>
+                <p>Какой интерфейс тебе ближе?</p>
                 <div class="theme-selector">
                     <div class="theme-card" data-theme="romantic" onclick="selectTheme('romantic')">
-                        <div class="preview" style="background:#fce4ec; color:#e91e63;">❤️</div>
-                        <div class="info"><h3>Романтичный</h3><p>Мягкие тона, уют, тепло</p></div>
+                        <div class="preview" style="background:linear-gradient(135deg,#e91e63,#880e4f); color:#fff;">❤️</div>
+                        <div class="info">
+                            <h3>Романтичный</h3>
+                            <p>Мягкие тона, уют, тепло</p>
+                        </div>
                     </div>
                     <div class="theme-card" data-theme="game" onclick="selectTheme('game')">
-                        <div class="preview" style="background:#0d0d1a; color:#7c4dff;">🎮</div>
-                        <div class="info"><h3>Игровой</h3><p>Неон, динамика, драйв</p></div>
+                        <div class="preview" style="background:linear-gradient(135deg,#7c4dff,#4a148c); color:#fff;">🎮</div>
+                        <div class="info">
+                            <h3>Игровой</h3>
+                            <p>Неон, динамика, драйв</p>
+                        </div>
                     </div>
                 </div>
                 <button id="themeConfirmBtn" class="btn-primary mt-20" style="display:none;" onclick="applyTheme()">Продолжить →</button>
@@ -176,7 +376,7 @@
         <div id="pageChat" class="page">
             <div class="card">
                 <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
-                    <button onclick="goToChats()" style="background:none; border:none; font-size:24px; cursor:pointer;">←</button>
+                    <button onclick="goToChats()" style="background:none; border:none; font-size:24px; cursor:pointer; color:#eee;">←</button>
                     <h3 id="chatPartnerName">Собеседник</h3>
                 </div>
                 <div class="chat-messages" id="chatMessages"></div>
@@ -266,9 +466,7 @@
             if (window.Telegram && window.Telegram.WebApp) {
                 initData = window.Telegram.WebApp.initData || '';
             }
-            // Всегда добавляем user_id для надёжности
             data.user_id = getFallbackUserId();
-            console.log('API call with user_id:', data.user_id);
             const resp = await fetch(`${API_BASE}/api`, {
                 method: 'POST',
                 headers: {
@@ -403,7 +601,7 @@
                 return;
             }
             container.innerHTML = state.uploadedPhotos.map(url => `
-                <div class="photo-preview" style="background-image: url(${url}); background-size: cover; background-position: center;">
+                <div class="photo-preview" style="background-image: url(${url});">
                     <span class="remove" onclick="removePhoto('${url}')">×</span>
                 </div>
             `).join('');
