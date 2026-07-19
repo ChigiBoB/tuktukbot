@@ -523,18 +523,23 @@
             trialRemaining: 0,
         };
 
+        // ===== ПОЛУЧЕНИЕ FALLBACK USER_ID =====
+        function getFallbackUserId() {
+            let uid = localStorage.getItem('tuktuk_fallback_user_id');
+            if (!uid) {
+                uid = Math.floor(Math.random() * 1000000) + 1000000;
+                localStorage.setItem('tuktuk_fallback_user_id', uid);
+            }
+            return parseInt(uid, 10);
+        }
+
         // ===== ИНИЦИАЛИЗАЦИЯ =====
         async function init() {
-            // Если мы внутри Telegram — инициализируем WebApp
             if (window.Telegram && window.Telegram.WebApp) {
                 window.Telegram.WebApp.ready();
-                // Для теста можно вывести в консоль, чтобы убедиться
                 console.log('Telegram WebApp initialized');
             } else {
-                // Если не внутри Telegram — покажем предупреждение, но не останавливаем работу (для теста)
                 console.warn('Not inside Telegram WebApp. Using fallback mode.');
-                // Для теста можно сгенерировать фейковый user_id
-                // Мы передадим его в теле запроса, и middleware подхватит
             }
 
             await checkAccess();
@@ -584,22 +589,15 @@
 
         // ===== ЗАПРОСЫ К API =====
         async function apiCall(action, data = {}) {
-            // Получаем initData из Telegram WebApp
             let initData = '';
             if (window.Telegram && window.Telegram.WebApp) {
                 initData = window.Telegram.WebApp.initData || '';
             }
 
-            // Если initData нет, используем fallback user_id в теле запроса
+            // Если initData нет, добавляем fallback user_id в тело запроса
             if (!initData) {
-                // Для теста: попробуем взять из localStorage или сгенерировать
-                let fallbackUserId = localStorage.getItem('tuktuk_fallback_user_id');
-                if (!fallbackUserId) {
-                    fallbackUserId = Math.floor(Math.random() * 1000000) + 1000000; // случайный ID для теста
-                    localStorage.setItem('tuktuk_fallback_user_id', fallbackUserId);
-                }
-                data.user_id = parseInt(fallbackUserId, 10);
-                console.log('Using fallback user_id:', data.user_id);
+                data.user_id = getFallbackUserId();
+                console.log('Using fallback user_id in API call:', data.user_id);
             }
 
             const resp = await fetch(`${API_BASE}/api`, {
@@ -712,14 +710,24 @@
             for (const file of files) {
                 const formData = new FormData();
                 formData.append('file', file);
+                
                 let initData = '';
                 if (window.Telegram && window.Telegram.WebApp) {
                     initData = window.Telegram.WebApp.initData || '';
                 }
+                // Если initData нет, добавляем user_id в FormData
+                if (!initData) {
+                    const fallbackUserId = getFallbackUserId();
+                    formData.append('user_id', fallbackUserId);
+                    console.log('Upload: using fallback user_id:', fallbackUserId);
+                }
+
                 try {
                     const resp = await fetch(`${API_BASE}/upload_photo`, {
                         method: 'POST',
-                        headers: { 'X-Telegram-WebApp-InitData': initData },
+                        headers: {
+                            'X-Telegram-WebApp-InitData': initData,
+                        },
                         body: formData,
                     });
                     const result = await resp.json();
